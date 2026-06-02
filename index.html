@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>早稲田大学 サークルディレクトリ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="top" class="page-top" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" data-scroll-top>早稲田サークル</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#top" data-scroll-top>ホーム</a>
+        <a href="#directory">Directory</a>
+        <a href="#about">このサイトについて</a>
+        <a href="#faq">FAQ</a>
+        <label class="language-control" aria-label="Language">
+          <svg class="language-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="19"></circle>
+            <path d="M5 24h38"></path>
+            <path d="M24 5v38"></path>
+            <path d="M10.5 12.5c3.6 2.3 8.2 3.5 13.5 3.5s9.9-1.2 13.5-3.5"></path>
+            <path d="M10.5 35.5c3.6-2.3 8.2-3.5 13.5-3.5s9.9 1.2 13.5 3.5"></path>
+            <path d="M24 5c-6 5.5-9 11.8-9 19s3 13.5 9 19"></path>
+            <path d="M24 5c6 5.5 9 11.8 9 19s-3 13.5-9 19"></path>
+          </svg>
+          <span>Language</span>
+          <select id="languageSelect" aria-label="Language">
+            <option value="ja">日本語</option>
+            <option value="en">English</option>
+            <option value="zh">中文（Mandarin）</option>
+            <option value="zh-yue">中文（Cantonese）</option>
+            <option value="ko">한국어</option>
+          </select>
+        </label>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>早稲田大学 サークルディレクトリ</h1>
+        <p>公式サークルガイドの情報をもとに、カテゴリ・人数・外国人学生受け入れ状況で探せます。</p>
+      </div>
+    </section>
+
+    <section class="directory" id="directory">
+      <aside class="filters" aria-label="Filters">
+        <div class="filter-block">
+          <label for="searchInput">検索</label>
+          <input id="searchInput" type="search" placeholder="サークル名・活動内容">
+        </div>
+
+        <div class="filter-block">
+          <label for="categorySelect">メインカテゴリ</label>
+          <select id="categorySelect">
+            <option value="">すべて</option>
+            <option value="スポーツ（球技）">スポーツ（球技）</option>
+            <option value="スポーツ（球技以外）">スポーツ（球技以外）</option>
+            <option value="文化・芸術">文化・芸術</option>
+            <option value="学問">学問</option>
+            <option value="メディア・出版">メディア・出版</option>
+            <option value="国際交流・ボランティア">国際交流・ボランティア</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div class="filter-block">
+          <label for="subcategorySelect">サブカテゴリ</label>
+          <select id="subcategorySelect" disabled>
+            <option value="">カテゴリを選択</option>
+          </select>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-label-row">
+            <span>活動日</span>
+            <button id="resetDays" class="small-reset" type="button">リセット</button>
+          </div>
+          <p class="filter-help" id="dayFilterHelp">選択した曜日のいずれかに活動するサークルを表示</p>
+          <div id="dayFilters" class="day-filters" aria-label="活動日">
+            <label><input type="checkbox" value="月"><span>月</span></label>
+            <label><input type="checkbox" value="火"><span>火</span></label>
+            <label><input type="checkbox" value="水"><span>水</span></label>
+            <label><input type="checkbox" value="木"><span>木</span></label>
+            <label><input type="checkbox" value="金"><span>金</span></label>
+            <label><input type="checkbox" value="土"><span>土</span></label>
+            <label><input type="checkbox" value="日"><span>日</span></label>
+            <label><input type="checkbox" value="平日"><span>平日</span></label>
+            <label><input type="checkbox" value="週末"><span>週末</span></label>
+            <label title="活動日が固定されていないサークル"><input type="checkbox" value="不定期"><span>不定期</span></label>
+          </div>
+          <p class="filter-help filter-help-sub" id="irregularHelp">不定期: 活動日が固定されていないサークル</p>
+        </div>
+
+        <label class="check-row">
+          <input id="foreignerEnrolledToggle" type="checkbox">
+          <span>外国人学生の在籍</span>
+        </label>
+
+        <label class="check-row">
+          <input id="welcomeMarkToggle" type="checkbox">
+          <span>留学生歓迎マークあり</span>
+        </label>
+
+        <div class="filter-actions">
+          <button id="sortMembers" type="button">人数順</button>
+          <button id="resetFilters" type="button">リセット</button>
+        </div>
+
+        <p class="result-count" id="resultCount">読み込み中</p>
+      </aside>
+
+      <section class="results" aria-live="polite">
+        <div id="loading" class="state">データを読み込み中...</div>
+        <div id="error" class="state error" hidden></div>
+        <div id="grid" class="grid"></div>
+        <div id="noresults" class="state" hidden>条件に一致するサークルがありません。</div>
+        <div id="pagination" class="pagination"></div>
+      </section>
+    </section>
+
+    <section class="info-section" id="about">
+      <h2>このサイトについて</h2>
+      <div class="info-panel">
+        <p>このサイトは、早稲田大学公式サークルガイドの公開情報をもとに、サークルを検索・比較しやすく整理したディレクトリです。</p>
+        <p>カテゴリ、活動日、所属人数、外国人学生の在籍状況、留学生歓迎マークなどを組み合わせて、自分に合うサークルを探せます。</p>
+        <p>各サークルの詳細情報と外部リンクは公式掲載内容を基準にしています。リンク切れや非公開リンクは削除せず、確認できる範囲で状態を管理します。</p>
+      </div>
+    </section>
+
+    <section class="info-section" id="faq">
+      <h2>FAQ</h2>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>掲載情報はどこから取得していますか？</h3>
+          <p>早稲田大学公式サークルガイドに掲載されている公開情報を基準にしています。</p>
+        </article>
+        <article class="faq-item">
+          <h3>「外国人学生の在籍」と「留学生歓迎マークあり」の違いは何ですか？</h3>
+          <p>「外国人学生の在籍」は掲載人数が1人以上の場合に表示されます。「留学生歓迎マークあり」は公式サイト上に歓迎マークが掲載されている場合に表示されます。</p>
+        </article>
+        <article class="faq-item">
+          <h3>活動日はどのように判定していますか？</h3>
+          <p>公式掲載の「活動日時・場所」から曜日表記を自動判定しています。複数の曜日を選ぶと、選択した曜日のいずれかに活動するサークルを表示します。</p>
+        </article>
+        <article class="faq-item">
+          <h3>リンクが開けない場合はどうすればよいですか？</h3>
+          <p>外部リンクは非公開、削除、または一時停止になっている場合があります。最新情報は学校公式サイトや各サークルの公式リンクで確認してください。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <template id="cardTemplate">
+    <article class="circle-card">
+      <div class="card-image image-carousel">
+        <button class="image-arrow image-arrow-prev" type="button" aria-label="前の写真">‹</button>
+        <button class="image-arrow image-arrow-next" type="button" aria-label="次の写真">›</button>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker"></div>
+        <h3></h3>
+        <p class="card-description"></p>
+        <dl class="card-meta"></dl>
+        <div class="official-link-slot"></div>
+        <div class="link-row"></div>
+      </div>
+    </article>
+  </template>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="modalClose" class="modal-close" type="button" aria-label="閉じる">&times;</button>
+      <div id="modalImage" class="modal-image image-carousel">
+        <button class="image-arrow image-arrow-prev" type="button" aria-label="前の写真">‹</button>
+        <button class="image-arrow image-arrow-next" type="button" aria-label="次の写真">›</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalCategory" class="card-kicker"></p>
+        <h2 id="modalTitle"></h2>
+        <div id="modalOfficialLink" class="official-modal-link link-row"></div>
+        <div id="modalDetails" class="modal-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -442,8 +442,9 @@ function localizeSimpleValue(value) {
 
 function formatMemberCount(value) {
   if (isNoInfoValue(value)) return t("unavailable");
-  const count = extractNumber(value);
-  return count ? callText("memberCount", count) : String(value);
+  const text = String(value ?? "");
+  if (!/\d|[０-９]/.test(text)) return text;
+  return callText("memberCount", extractNumber(text));
 }
 
 function formatFoundedYear(value) {
@@ -457,8 +458,8 @@ function formatActivityDays(days) {
 }
 
 function formatForeigner(record) {
-  const count = extractNumber(record.foreignerRaw);
-  const base = count ? callText("memberCount", count) : localizeSimpleValue(record.foreignerRaw);
+  const text = String(record.foreignerRaw ?? "");
+  const base = /\d|[０-９]/.test(text) ? callText("memberCount", extractNumber(text)) : localizeSimpleValue(text);
   return `${base}${record.foreignerWelcomeMark ? t("welcomeSuffix") : ""}`;
 }
 

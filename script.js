@@ -1,4 +1,9 @@
 const CSV_URL = "data/raw/official_latest_all_link_checked.csv";
+const TRANSLATION_URLS = {
+  en: "data/i18n/en/circles_en_complete.csv",
+  ko: "data/i18n/ko/circles_ko_complete.csv",
+  zh: "data/i18n/zh_mandarin/circles_zh_mandarin_complete.csv",
+};
 const FALLBACK_IMAGE = "https://www.waseda.jp/inst/weekly/assets/uploads/2015/12/waseda_no_image-610x457.png";
 const PAGE_SIZE = 12;
 const MAX_SEARCH_LENGTH = 80;
@@ -15,6 +20,8 @@ const SUBCATEGORIES = {
 };
 
 const state = {
+  baseRows: [],
+  translations: {},
   records: [],
   filtered: [],
   page: 1,
@@ -253,7 +260,7 @@ function parseCSV(text) {
     row.push(cell);
     rows.push(row);
   }
-  const headers = rows.shift().map((header) => header.trim());
+  const headers = rows.shift().map((header) => header.replace(/^\uFEFF/, "").trim());
   return rows
     .filter((cells) => cells.some((cell) => cell.trim()))
     .map((cells) => Object.fromEntries(headers.map((header, i) => [header, (cells[i] ?? "").trim()])));
@@ -340,16 +347,23 @@ function parseOtherLinks(value) {
   return urls.map((url) => ({ label: "その他", url, group: "その他" }));
 }
 
-function normalizeRow(row) {
-  const scheduleParts = splitSchedule(row["活動日時・場所"]);
+function translatedValue(translation, row, column) {
+  return isPresent(translation?.[column]) ? translation[column] : row[column];
+}
+
+function normalizeRow(row, translation = {}) {
+  const displaySchedule = translatedValue(translation, row, "活動日時・場所");
+  const scheduleParts = splitSchedule(displaySchedule);
   return {
     id: row.circle_id,
     wasedaId: row.waseda_id,
-    name: row["名前"] || "名称不明",
-    mainCategory: row["メインカテゴリ"] || "その他",
-    subcategory: row["サブカテゴリ"] || "その他",
-    description: row["活動内容"] || "情報なし",
-    schedule: row["活動日時・場所"] || "情報なし",
+    name: translatedValue(translation, row, "名前") || "名称不明",
+    mainCategory: translatedValue(translation, row, "メインカテゴリ") || "その他",
+    subcategory: translatedValue(translation, row, "サブカテゴリ") || "その他",
+    categoryKey: row["メインカテゴリ"] || "その他",
+    subcategoryKey: row["サブカテゴリ"] || "その他",
+    description: translatedValue(translation, row, "活動内容") || "情報なし",
+    schedule: displaySchedule || "情報なし",
     activityDateTime: scheduleParts.dateTime,
     location: scheduleParts.location,
     activityDays: extractActivityDays(row["活動日時・場所"]),
@@ -361,7 +375,7 @@ function normalizeRow(row) {
     foreignerWelcomeMark: row["外国人学生歓迎マーク"] === "あり",
     foreignerAccepted: extractNumber(row["外国人学生の受け入れ"]) > 0 || row["外国人学生歓迎マーク"] === "あり",
     images: imageList(row["写真URL"]),
-    siteMemo: row["サイトメモ"] || "なし",
+    siteMemo: translatedValue(translation, row, "サイトメモ") || "なし",
     schoolUrl: row["ウェブサイト（学校）"],
     note: row.note || "なし",
     remarks: row["備考"] || "なし",
@@ -378,6 +392,11 @@ function normalizeRow(row) {
       "その他": row["その他のリンク"],
     },
   };
+}
+
+function buildRecordsForLanguage(language) {
+  const translations = state.translations[language] || {};
+  return state.baseRows.map((row) => normalizeRow(row, translations[row.circle_id]));
 }
 
 function renderSubcategories() {
@@ -403,8 +422,8 @@ function applyFilters() {
   const subcategory = els.subcategory.value;
   const selectedDays = getSelectedDays();
   state.filtered = state.records.filter((record) => {
-    if (category && record.mainCategory !== category) return false;
-    if (subcategory && record.subcategory !== subcategory) return false;
+    if (category && record.categoryKey !== category) return false;
+    if (subcategory && record.subcategoryKey !== subcategory) return false;
     if (selectedDays.length) {
       const expectedDays = selectedDays.flatMap((day) => DAY_GROUPS[day] || [day]);
       if (!expectedDays.some((expectedDay) => record.activityDays.includes(expectedDay))) return false;
@@ -412,7 +431,7 @@ function applyFilters() {
     if (els.foreignerEnrolled.checked && record.foreignerNumber <= 0) return false;
     if (els.welcomeMark.checked && !record.foreignerWelcomeMark) return false;
     if (query) {
-      const haystack = [record.name, record.description, record.subcategory, record.schedule].join(" ").toLowerCase();
+      const haystack = [record.name, record.description, record.subcategory, record.schedule, record.categoryKey, record.subcategoryKey].join(" ").toLowerCase();
       if (!haystack.includes(query)) return false;
     }
     return true;
@@ -676,6 +695,8 @@ function applyLanguage() {
     item.querySelector("h3").textContent = faqItem[0];
     item.querySelector("p").textContent = faqItem[1];
   });
+  state.records = buildRecordsForLanguage(state.language);
+  applyFilters();
   render();
 }
 
@@ -683,8 +704,15 @@ async function init() {
   try {
     const response = await fetch(`${CSV_URL}?v=${Date.now()}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const rows = parseCSV(await response.text());
-    state.records = rows.map(normalizeRow);
+    state.baseRows = parseCSV(await response.text());
+    const translationEntries = await Promise.all(Object.entries(TRANSLATION_URLS).map(async ([language, url]) => {
+      const translationResponse = await fetch(`${url}?v=${Date.now()}`);
+      if (!translationResponse.ok) throw new Error(`${language} translation HTTP ${translationResponse.status}`);
+      const rows = parseCSV(await translationResponse.text());
+      return [language, Object.fromEntries(rows.map((row) => [row.circle_id, row]))];
+    }));
+    state.translations = Object.fromEntries(translationEntries);
+    state.records = buildRecordsForLanguage(state.language);
     state.filtered = state.records.slice();
     els.loading.hidden = true;
     renderSubcategories();

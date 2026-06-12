@@ -44,6 +44,34 @@ const UI_TEXT = {
     welcomeMark: "留学生歓迎マークあり",
     sort: "人数順",
     reset: "リセット",
+    all: "すべて",
+    chooseCategory: "カテゴリを選択",
+    searchPlaceholder: "サークル名・活動内容",
+    resultCount: (count) => `${count}件`,
+    unavailable: "情報なし",
+    none: "なし",
+    yes: "あり",
+    memberCount: (value) => `${value}人`,
+    foundedYear: (value) => `${value}年`,
+    cardMembers: "人数",
+    cardFounded: "設立",
+    cardForeigner: "外国人",
+    modalDescription: "活動内容",
+    modalDateTime: "活動日時",
+    modalActivityDay: "活動日",
+    modalLocation: "場所",
+    modalMembers: "所属人数",
+    modalFounded: "設立年",
+    modalForeigner: "外国人学生の受け入れ",
+    modalWelcomeMark: "留学生歓迎マーク",
+    modalSiteMemo: "サイトメモ",
+    foreignerCriteria: "※掲載基準: 受け入れ人数が1人以上、または公式サイトに「留学生歓迎」マークがある場合",
+    welcomeSuffix: " / 留学生歓迎",
+    otherLinks: "その他のリンク",
+    firstPage: "最初のページ",
+    previousPages: "前の5ページ",
+    nextPages: "次の5ページ",
+    lastPage: "最後のページ",
     noResults: "条件に一致するサークルがありません。",
     loading: "データを読み込み中...",
     schoolOfficial: "学校公式サイト",
@@ -79,6 +107,34 @@ const UI_TEXT = {
     welcomeMark: "유학생 환영 마크 있음",
     sort: "인원순",
     reset: "초기화",
+    all: "전체",
+    chooseCategory: "카테고리 선택",
+    searchPlaceholder: "서클명・활동 내용",
+    resultCount: (count) => `${count}개`,
+    unavailable: "정보 없음",
+    none: "없음",
+    yes: "있음",
+    memberCount: (value) => `${value}명`,
+    foundedYear: (value) => `${value}년`,
+    cardMembers: "인원",
+    cardFounded: "설립",
+    cardForeigner: "외국인",
+    modalDescription: "활동 내용",
+    modalDateTime: "활동 일시",
+    modalActivityDay: "활동일",
+    modalLocation: "장소",
+    modalMembers: "소속 인원",
+    modalFounded: "설립연도",
+    modalForeigner: "외국인 학생 수용",
+    modalWelcomeMark: "유학생 환영 마크",
+    modalSiteMemo: "사이트 메모",
+    foreignerCriteria: "※ 게재 기준: 수용 인원이 1명 이상이거나 공식 사이트에 ‘유학생 환영’ 마크가 있는 경우",
+    welcomeSuffix: " / 유학생 환영",
+    otherLinks: "기타 링크",
+    firstPage: "첫 페이지",
+    previousPages: "이전 5페이지",
+    nextPages: "다음 5페이지",
+    lastPage: "마지막 페이지",
     noResults: "조건에 맞는 서클이 없습니다.",
     loading: "데이터를 불러오는 중...",
     schoolOfficial: "학교 공식 사이트",
@@ -114,6 +170,34 @@ const UI_TEXT = {
     welcomeMark: "Welcome mark shown",
     sort: "Members",
     reset: "Reset",
+    all: "All",
+    chooseCategory: "Select a category",
+    searchPlaceholder: "Circle name or activity",
+    resultCount: (count) => `${count} results`,
+    unavailable: "No information",
+    none: "None",
+    yes: "Yes",
+    memberCount: (value) => `${value} members`,
+    foundedYear: (value) => `${value}`,
+    cardMembers: "Members",
+    cardFounded: "Founded",
+    cardForeigner: "International",
+    modalDescription: "Activity details",
+    modalDateTime: "Activity time",
+    modalActivityDay: "Activity day",
+    modalLocation: "Location",
+    modalMembers: "Members",
+    modalFounded: "Founded",
+    modalForeigner: "International students accepted",
+    modalWelcomeMark: "Welcome mark",
+    modalSiteMemo: "Site note",
+    foreignerCriteria: "Listed when at least one international student is accepted, or when the official site shows an international-student welcome mark.",
+    welcomeSuffix: " / International students welcome",
+    otherLinks: "Other links",
+    firstPage: "First page",
+    previousPages: "Previous 5 pages",
+    nextPages: "Next 5 pages",
+    lastPage: "Last page",
     noResults: "No circles match the selected conditions.",
     loading: "Loading data...",
     schoolOfficial: "University official page",
@@ -149,6 +233,34 @@ const UI_TEXT = {
     welcomeMark: "有留学生欢迎标记",
     sort: "按人数",
     reset: "重置",
+    all: "全部",
+    chooseCategory: "选择类别",
+    searchPlaceholder: "社团名称・活动内容",
+    resultCount: (count) => `${count}个结果`,
+    unavailable: "暂无信息",
+    none: "无",
+    yes: "有",
+    memberCount: (value) => `${value}人`,
+    foundedYear: (value) => `${value}年`,
+    cardMembers: "人数",
+    cardFounded: "成立",
+    cardForeigner: "留学生",
+    modalDescription: "活动内容",
+    modalDateTime: "活动时间",
+    modalActivityDay: "活动日",
+    modalLocation: "地点",
+    modalMembers: "成员人数",
+    modalFounded: "成立年份",
+    modalForeigner: "留学生接收情况",
+    modalWelcomeMark: "留学生欢迎标记",
+    modalSiteMemo: "网站备注",
+    foreignerCriteria: "※刊载标准：接收人数为1人以上，或官方网站显示“欢迎留学生”标记",
+    welcomeSuffix: " / 欢迎留学生",
+    otherLinks: "其他链接",
+    firstPage: "第一页",
+    previousPages: "前5页",
+    nextPages: "后5页",
+    lastPage: "最后一页",
     noResults: "没有符合条件的社团。",
     loading: "正在加载数据...",
     schoolOfficial: "学校官方网站",
@@ -174,8 +286,102 @@ const UI_TEXT = {
 
 UI_TEXT["zh-yue"] = UI_TEXT.zh;
 
+const CATEGORY_LABELS = {
+  ja: {
+    "スポーツ（球技）": "スポーツ（球技）",
+    "スポーツ（球技以外）": "スポーツ（球技以外）",
+    "文化・芸術": "文化・芸術",
+    "学問": "学問",
+    "メディア・出版": "メディア・出版",
+    "国際交流・ボランティア": "国際交流・ボランティア",
+    "その他": "その他",
+  },
+  ko: {
+    "スポーツ（球技）": "스포츠(구기)",
+    "スポーツ（球技以外）": "스포츠(구기 외)",
+    "文化・芸術": "문화・예술",
+    "学問": "학문",
+    "メディア・出版": "미디어・출판",
+    "国際交流・ボランティア": "국제교류・봉사",
+    "その他": "기타",
+  },
+  en: {
+    "スポーツ（球技）": "Sports (ball games)",
+    "スポーツ（球技以外）": "Sports (non-ball games)",
+    "文化・芸術": "Culture and arts",
+    "学問": "Academics",
+    "メディア・出版": "Media and publishing",
+    "国際交流・ボランティア": "International exchange and volunteering",
+    "その他": "Other",
+  },
+  zh: {
+    "スポーツ（球技）": "体育（球类）",
+    "スポーツ（球技以外）": "体育（非球类）",
+    "文化・芸術": "文化・艺术",
+    "学問": "学术",
+    "メディア・出版": "媒体・出版",
+    "国際交流・ボランティア": "国际交流・志愿服务",
+    "その他": "其他",
+  },
+};
+
+const SUBCATEGORY_LABELS = {
+  en: {
+    "野球": "Baseball", "サッカー": "Soccer", "フットサル": "Futsal", "ラグビー": "Rugby", "アメリカンフットボール": "American football", "バスケットボール": "Basketball", "テニス": "Tennis", "バレーボール": "Volleyball", "ゴルフ": "Golf", "その他の球技": "Other ball games",
+    "バドミントン": "Badminton", "ダンス": "Dance", "武道": "Martial arts", "乗馬": "Equestrian", "ヨット": "Yachting", "スキー": "Skiing", "水泳": "Swimming", "サイクリング": "Cycling", "アウトドア": "Outdoor", "その他のスポーツ": "Other sports",
+    "舞台芸術": "Performing arts", "演劇": "Theater", "映画": "Film", "音楽": "Music", "声楽": "Vocal music", "美術": "Fine arts", "その他の文化": "Other culture",
+    "政治": "Politics", "経済": "Economics", "歴史": "History", "宗教": "Religion", "哲学": "Philosophy", "法律": "Law", "自然科学": "Natural sciences", "言語": "Languages", "日本文学": "Japanese literature", "日本文化": "Japanese culture", "学問": "Academics", "趣味": "Hobbies", "技術": "Technology",
+    "出版": "Publishing", "コミュニケーション": "Communication", "マスメディア": "Mass media", "企画": "Planning", "レクリエーション": "Recreation",
+    "国際交流": "International exchange", "ボランティア": "Volunteering", "学生稲門会": "Student Tomonkai",
+  },
+  ko: {
+    "野球": "야구", "サッカー": "축구", "フットサル": "풋살", "ラグビー": "럭비", "アメリカンフットボール": "미식축구", "バスケットボール": "농구", "テニス": "테니스", "バレーボール": "배구", "ゴルフ": "골프", "その他の球技": "기타 구기",
+    "バドミントン": "배드민턴", "ダンス": "댄스", "武道": "무도", "乗馬": "승마", "ヨット": "요트", "スキー": "스키", "水泳": "수영", "サイクリング": "사이클링", "アウトドア": "아웃도어", "その他のスポーツ": "기타 스포츠",
+    "舞台芸術": "무대예술", "演劇": "연극", "映画": "영화", "音楽": "음악", "声楽": "성악", "美術": "미술", "その他の文化": "기타 문화",
+    "政治": "정치", "経済": "경제", "歴史": "역사", "宗教": "종교", "哲学": "철학", "法律": "법률", "自然科学": "자연과학", "言語": "언어", "日本文学": "일본문학", "日本文化": "일본문화", "学問": "학문", "趣味": "취미", "技術": "기술",
+    "出版": "출판", "コミュニケーション": "커뮤니케이션", "マスメディア": "매스미디어", "企画": "기획", "レクリエーション": "레크리에이션",
+    "国際交流": "국제교류", "ボランティア": "봉사", "学生稲門会": "학생 도몬회",
+  },
+  zh: {
+    "野球": "棒球", "サッカー": "足球", "フットサル": "五人制足球", "ラグビー": "橄榄球", "アメリカンフットボール": "美式足球", "バスケットボール": "篮球", "テニス": "网球", "バレーボール": "排球", "ゴルフ": "高尔夫", "その他の球技": "其他球类",
+    "バドミントン": "羽毛球", "ダンス": "舞蹈", "武道": "武道", "乗馬": "马术", "ヨット": "帆船", "スキー": "滑雪", "水泳": "游泳", "サイクリング": "骑行", "アウトドア": "户外", "その他のスポーツ": "其他体育",
+    "舞台芸術": "舞台艺术", "演劇": "戏剧", "映画": "电影", "音楽": "音乐", "声楽": "声乐", "美術": "美术", "その他の文化": "其他文化",
+    "政治": "政治", "経済": "经济", "歴史": "历史", "宗教": "宗教", "哲学": "哲学", "法律": "法律", "自然科学": "自然科学", "言語": "语言", "日本文学": "日本文学", "日本文化": "日本文化", "学問": "学术", "趣味": "兴趣", "技術": "技术",
+    "出版": "出版", "コミュニケーション": "交流", "マスメディア": "大众媒体", "企画": "策划", "レクリエーション": "休闲",
+    "国際交流": "国际交流", "ボランティア": "志愿服务", "学生稲門会": "学生稻门会",
+  },
+};
+
+const DAY_LABELS = {
+  ja: { 月: "月", 火: "火", 水: "水", 木: "木", 金: "金", 土: "土", 日: "日", 平日: "平日", 週末: "週末", 不定期: "不定期" },
+  ko: { 月: "월", 火: "화", 水: "수", 木: "목", 金: "금", 土: "토", 日: "일", 平日: "평일", 週末: "주말", 不定期: "부정기" },
+  en: { 月: "Mon", 火: "Tue", 水: "Wed", 木: "Thu", 金: "Fri", 土: "Sat", 日: "Sun", 平日: "Weekdays", 週末: "Weekend", 不定期: "Irregular" },
+  zh: { 月: "周一", 火: "周二", 水: "周三", 木: "周四", 金: "周五", 土: "周六", 日: "周日", 平日: "平日", 週末: "周末", 不定期: "不定期" },
+};
+
+CATEGORY_LABELS["zh-yue"] = CATEGORY_LABELS.zh;
+SUBCATEGORY_LABELS["zh-yue"] = SUBCATEGORY_LABELS.zh;
+DAY_LABELS["zh-yue"] = DAY_LABELS.zh;
+
 function t(key) {
   return UI_TEXT[state.language][key] || UI_TEXT.ja[key] || key;
+}
+
+function callText(key, value) {
+  const entry = t(key);
+  return typeof entry === "function" ? entry(value) : entry;
+}
+
+function categoryLabel(value) {
+  return CATEGORY_LABELS[state.language]?.[value] || value;
+}
+
+function subcategoryLabel(value) {
+  return SUBCATEGORY_LABELS[state.language]?.[value] || value;
+}
+
+function dayLabel(value) {
+  return DAY_LABELS[state.language]?.[value] || value;
 }
 
 const DAY_GROUPS = {
@@ -222,6 +428,38 @@ function safeUrl(value) {
   } catch {
     return "";
   }
+}
+
+function isNoInfoValue(value) {
+  return !isPresent(value) || ["なし", "情報なし"].includes(String(value).trim());
+}
+
+function localizeSimpleValue(value) {
+  const text = String(value ?? "").trim();
+  if (isNoInfoValue(text)) return text === "情報なし" ? t("unavailable") : t("none");
+  return text;
+}
+
+function formatMemberCount(value) {
+  if (isNoInfoValue(value)) return t("unavailable");
+  const count = extractNumber(value);
+  return count ? callText("memberCount", count) : String(value);
+}
+
+function formatFoundedYear(value) {
+  if (isNoInfoValue(value)) return t("unavailable");
+  const year = extractNumber(value);
+  return year ? callText("foundedYear", year) : String(value);
+}
+
+function formatActivityDays(days) {
+  return days.length ? days.map(dayLabel).join(" / ") : t("unavailable");
+}
+
+function formatForeigner(record) {
+  const count = extractNumber(record.foreignerRaw);
+  const base = count ? callText("memberCount", count) : localizeSimpleValue(record.foreignerRaw);
+  return `${base}${record.foreignerWelcomeMark ? t("welcomeSuffix") : ""}`;
 }
 
 function parseCSV(text) {
@@ -405,12 +643,12 @@ function renderSubcategories() {
   els.subcategory.replaceChildren();
   if (!subcategories.length) {
     els.subcategory.disabled = true;
-    els.subcategory.append(new Option("カテゴリを選択", ""));
+    els.subcategory.append(new Option(t("chooseCategory"), ""));
     return;
   }
   els.subcategory.disabled = false;
-  els.subcategory.append(new Option("すべて", ""));
-  subcategories.forEach((subcategory) => els.subcategory.append(new Option(subcategory, subcategory)));
+  els.subcategory.append(new Option(t("all"), ""));
+  subcategories.forEach((subcategory) => els.subcategory.append(new Option(subcategoryLabel(subcategory), subcategory)));
 }
 
 function applyFilters() {
@@ -462,7 +700,7 @@ function appendMeta(dl, label, value) {
   const dd = document.createElement("dd");
   dt.textContent = label;
   dd.textContent = value;
-  if (label === "外国人学生の受け入れ") {
+  if (label === t("modalForeigner")) {
     dd.classList.add("criteria-note");
   }
   dl.append(dt, dd);
@@ -500,9 +738,9 @@ function renderCard(record) {
   node.querySelector("h3").textContent = record.name;
   node.querySelector(".card-description").textContent = record.description;
   const meta = node.querySelector(".card-meta");
-  appendMeta(meta, "人数", record.membersRaw);
-  appendMeta(meta, "設立", record.founded);
-  appendMeta(meta, "外国人", `${record.foreignerRaw}${record.foreignerWelcomeMark ? " / 留学生歓迎" : ""}`);
+  appendMeta(meta, t("cardMembers"), formatMemberCount(record.membersRaw));
+  appendMeta(meta, t("cardFounded"), formatFoundedYear(record.founded));
+  appendMeta(meta, t("cardForeigner"), formatForeigner(record));
   const officialSlot = node.querySelector(".official-link-slot");
   const officialLink = createOfficialLink(record);
   if (officialLink) officialSlot.append(officialLink);
@@ -558,7 +796,7 @@ function appendLinks(container, record, limit = Infinity) {
   if (otherLinks.length === 1) {
     nodes.push(createLink(otherLinks[0]));
   } else if (otherLinks.length > 1) {
-    nodes.push(createLinkMenu("その他のリンク", otherLinks));
+    nodes.push(createLinkMenu(t("otherLinks"), otherLinks));
   }
 
   nodes.slice(0, limit).forEach((node) => container.append(node));
@@ -586,7 +824,7 @@ function render() {
   els.grid.replaceChildren();
   pageItems.forEach((record) => els.grid.append(renderCard(record)));
   els.noresults.hidden = total !== 0;
-  els.count.textContent = `${total}件`;
+  els.count.textContent = callText("resultCount", total);
 
   els.pagination.replaceChildren();
   if (pages > 1) {
@@ -611,13 +849,13 @@ function appendPageButton(label, page, options = {}) {
 function renderPaginationButtons(pages) {
   const groupStart = Math.floor((state.page - 1) / 5) * 5 + 1;
   const groupEnd = Math.min(groupStart + 4, pages);
-  appendPageButton("<<", 1, { disabled: state.page === 1, label: "最初のページ" });
-  appendPageButton("<", Math.max(1, groupStart - 5), { disabled: groupStart === 1, label: "前の5ページ" });
+  appendPageButton("<<", 1, { disabled: state.page === 1, label: t("firstPage") });
+  appendPageButton("<", Math.max(1, groupStart - 5), { disabled: groupStart === 1, label: t("previousPages") });
   for (let i = groupStart; i <= groupEnd; i++) {
     appendPageButton(String(i), i, { active: i === state.page });
   }
-  appendPageButton(">", Math.min(pages, groupEnd + 1), { disabled: groupEnd === pages, label: "次の5ページ" });
-  appendPageButton(">>", pages, { disabled: state.page === pages, label: "最後のページ" });
+  appendPageButton(">", Math.min(pages, groupEnd + 1), { disabled: groupEnd === pages, label: t("nextPages") });
+  appendPageButton(">>", pages, { disabled: state.page === pages, label: t("lastPage") });
 }
 
 function openModal(record) {
@@ -630,16 +868,16 @@ function openModal(record) {
   appendLinks(els.modalOfficialLink, record);
   els.modalDetails.replaceChildren();
   [
-    ["活動内容", record.description],
-    ["活動日時", record.activityDateTime],
-    ["活動日", record.activityDays.length ? record.activityDays.join("・") : "情報なし"],
-    ["場所", record.location],
-    ["所属人数", record.membersRaw],
-    ["設立年", record.founded],
-    ["外国人学生の受け入れ", `${record.foreignerRaw} ※掲載基準: 受け入れ人数が1人以上、または公式サイトに「留学生歓迎」マークがある場合`],
-    ["留学生歓迎マーク", record.foreignerWelcomeMark ? "あり" : "なし"],
-    ["サイトメモ", record.siteMemo],
-    ["note", record.note],
+    [t("modalDescription"), record.description],
+    [t("modalDateTime"), localizeSimpleValue(record.activityDateTime)],
+    [t("modalActivityDay"), formatActivityDays(record.activityDays)],
+    [t("modalLocation"), localizeSimpleValue(record.location)],
+    [t("modalMembers"), formatMemberCount(record.membersRaw)],
+    [t("modalFounded"), formatFoundedYear(record.founded)],
+    [t("modalForeigner"), `${formatForeigner(record)} ${t("foreignerCriteria")}`],
+    [t("modalWelcomeMark"), record.foreignerWelcomeMark ? t("yes") : t("none")],
+    [t("modalSiteMemo"), localizeSimpleValue(record.siteMemo)],
+    ["note", localizeSimpleValue(record.note)],
   ].forEach(([label, value]) => appendMeta(els.modalDetails, label, value));
   els.modal.hidden = false;
 }
@@ -667,13 +905,23 @@ function scrollToTop(event) {
 
 function applyLanguage() {
   document.documentElement.lang = state.language === "ko" ? "ko" : state.language === "zh-yue" ? "zh-Hant-HK" : state.language === "zh" ? "zh-Hans" : state.language === "en" ? "en" : "ja";
+  document.title = t("heroTitle");
   setText(".brand", t("brand"));
   setTextAll(".nav-links > a", [t("navHome"), t("navDirectory"), t("navAbout"), t("navFaq")]);
   setText(".hero h1", t("heroTitle"));
   setText(".hero p", t("heroCopy"));
   setText('label[for="searchInput"]', t("search"));
+  els.search.placeholder = t("searchPlaceholder");
   setText('label[for="categorySelect"]', t("category"));
   setText('label[for="subcategorySelect"]', t("subcategory"));
+  [...els.category.options].forEach((option) => {
+    option.textContent = option.value ? categoryLabel(option.value) : t("all");
+  });
+  [...els.dayFilters.querySelectorAll("label")].forEach((label) => {
+    const input = label.querySelector("input");
+    const span = label.querySelector("span");
+    if (input && span) span.textContent = dayLabel(input.value);
+  });
   setText(".filter-label-row span", t("day"));
   setText("#dayFilterHelp", t("dayHelp"));
   setText("#irregularHelp", t("irregularHelp"));
@@ -696,6 +944,7 @@ function applyLanguage() {
     item.querySelector("p").textContent = faqItem[1];
   });
   state.records = buildRecordsForLanguage(state.language);
+  renderSubcategories();
   applyFilters();
   render();
 }
@@ -755,7 +1004,7 @@ els.reset.addEventListener("click", () => {
   els.dayFilters.querySelectorAll("input").forEach((input) => {
     input.checked = false;
   });
-  els.subcategory.replaceChildren(new Option("カテゴリを選択", ""));
+  els.subcategory.replaceChildren(new Option(t("chooseCategory"), ""));
   els.subcategory.disabled = true;
   els.foreignerEnrolled.checked = false;
   els.welcomeMark.checked = false;

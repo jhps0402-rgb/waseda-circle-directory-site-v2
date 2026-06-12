@@ -3,6 +3,7 @@ const TRANSLATION_URLS = {
   en: "data/i18n/en/circles_en_complete.csv",
   ko: "data/i18n/ko/circles_ko_complete.csv",
   zh: "data/i18n/zh_mandarin/circles_zh_mandarin_complete.csv",
+  "zh-yue": "data/i18n/zh_cantonese/circles_zh_cantonese_complete.csv",
 };
 const FALLBACK_IMAGE = "https://www.waseda.jp/inst/weekly/assets/uploads/2015/12/waseda_no_image-610x457.png";
 const PAGE_SIZE = 12;
@@ -284,7 +285,63 @@ const UI_TEXT = {
   },
 };
 
-UI_TEXT["zh-yue"] = UI_TEXT.zh;
+UI_TEXT["zh-yue"] = {
+  ...UI_TEXT.zh,
+  brand: "早稻田社團",
+  heroTitle: "早稻田大學社團目錄",
+  heroCopy: "根據官方社團指南，可按類別、人數及國際學生接收情況搜尋。",
+  search: "搜尋",
+  category: "主類別",
+  subcategory: "子類別",
+  day: "活動日",
+  dayHelp: "顯示在所選星期中任意一天活動的社團",
+  irregularHelp: "不定期：活動日未固定的社團",
+  foreignerEnrolled: "有國際學生在籍",
+  welcomeMark: "有國際學生歡迎標記",
+  sort: "按人數",
+  reset: "重設",
+  all: "全部",
+  chooseCategory: "選擇類別",
+  searchPlaceholder: "社團名稱・活動內容",
+  resultCount: (count) => `${count}個結果`,
+  unavailable: "暫無資訊",
+  none: "無",
+  memberCount: (value) => `${value}人`,
+  cardMembers: "人數",
+  cardFounded: "成立",
+  cardForeigner: "國際學生",
+  modalDateTime: "活動時間",
+  modalActivityDay: "活動日",
+  modalMembers: "成員人數",
+  modalFounded: "成立年份",
+  modalForeigner: "國際學生接收情況",
+  modalWelcomeMark: "國際學生歡迎標記",
+  modalSiteMemo: "網站備註",
+  foreignerCriteria: "※刊載標準：接收人數為1人以上，或官方網站顯示「歡迎國際學生」標記",
+  welcomeSuffix: " / 歡迎國際學生",
+  otherLinks: "其他連結",
+  firstPage: "第一頁",
+  previousPages: "前5頁",
+  nextPages: "後5頁",
+  lastPage: "最後一頁",
+  noResults: "沒有符合條件的社團。",
+  loading: "正在載入資料...",
+  schoolOfficial: "學校官方網站",
+  navHome: "首頁",
+  navAbout: "關於本站",
+  aboutTitle: "關於本站",
+  aboutCopy: [
+    "本網站根據早稻田大學官方社團指南的公開資料，整理成方便搜尋和比較的社團目錄。",
+    "可以組合類別、活動日、成員人數、國際學生在籍情況及歡迎標記等條件，尋找適合自己的社團。",
+    "各社團詳情及外部連結以官方刊載內容為準。失效或非公開連結不會直接刪除，而是在可確認範圍內記錄狀態。",
+  ],
+  faqItems: [
+    ["資料來自哪裏？", "資料根據早稻田大學官方社團指南中公開刊載的資訊。"],
+    ["「有國際學生在籍」和「有國際學生歡迎標記」有甚麼分別？", "「有國際學生在籍」表示刊載人數為1人以上。「有國際學生歡迎標記」表示官方頁面顯示了歡迎標記。"],
+    ["活動日如何判定？", "系統會從官方刊載的活動日期、時間和地點文字中自動判定星期。選擇多個星期時，會顯示在任意所選星期活動的社團。"],
+    ["連結打不開怎麼辦？", "外部連結可能為非公開、已刪除或暫時不可用。請透過學校官方網站或各社團官方連結確認最新資訊。"],
+  ],
+};
 
 const CATEGORY_LABELS = {
   ja: {
@@ -359,9 +416,35 @@ const DAY_LABELS = {
   zh: { 月: "周一", 火: "周二", 水: "周三", 木: "周四", 金: "周五", 土: "周六", 日: "周日", 平日: "平日", 週末: "周末", 不定期: "不定期" },
 };
 
-CATEGORY_LABELS["zh-yue"] = CATEGORY_LABELS.zh;
-SUBCATEGORY_LABELS["zh-yue"] = SUBCATEGORY_LABELS.zh;
-DAY_LABELS["zh-yue"] = DAY_LABELS.zh;
+CATEGORY_LABELS["zh-yue"] = {
+  "スポーツ（球技）": "體育（球類）",
+  "スポーツ（球技以外）": "體育（非球類）",
+  "文化・芸術": "文化・藝術",
+  "学問": "學問",
+  "メディア・出版": "媒體・出版",
+  "国際交流・ボランティア": "國際交流・義工服務",
+  "その他": "其他",
+};
+SUBCATEGORY_LABELS["zh-yue"] = {
+  ...SUBCATEGORY_LABELS.zh,
+  "テニス": "網球",
+  "バスケットボール": "籃球",
+  "バレーボール": "排球",
+  "アメリカンフットボール": "美式足球",
+  "ラグビー": "欖球",
+  "音楽": "音樂",
+  "舞台芸術": "舞台藝術",
+  "映画": "電影",
+  "美術": "美術",
+  "学問": "學術",
+  "趣味": "興趣",
+  "経済": "經濟",
+  "言語": "語言",
+  "国際交流": "國際交流",
+  "ボランティア": "義工服務",
+  "学生稲門会": "學生稻門會",
+};
+DAY_LABELS["zh-yue"] = { 月: "週一", 火: "週二", 水: "週三", 木: "週四", 金: "週五", 土: "週六", 日: "週日", 平日: "平日", 週末: "週末", 不定期: "不定期" };
 
 function t(key) {
   return UI_TEXT[state.language][key] || UI_TEXT.ja[key] || key;

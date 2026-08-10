@@ -28,6 +28,7 @@ const state = {
   page: 1,
   sortMembers: false,
   language: "ja",
+  lastFocusedElement: null,
 };
 
 const UI_TEXT = {
@@ -76,8 +77,15 @@ const UI_TEXT = {
     noResults: "条件に一致するサークルがありません。",
     loading: "データを読み込み中...",
     schoolOfficial: "学校公式サイト",
+    languageLabel: "言語",
+    primaryNavigation: "メインナビゲーション",
+    filtersAria: "検索フィルター",
+    activityDaysAria: "活動日",
+    previousImage: "前の写真",
+    nextImage: "次の写真",
+    close: "閉じる",
+    modalNote: "note",
     navHome: "ホーム",
-    navDirectory: "Directory",
     navAbout: "このサイトについて",
     navFaq: "FAQ",
     aboutTitle: "このサイトについて",
@@ -139,8 +147,15 @@ const UI_TEXT = {
     noResults: "조건에 맞는 서클이 없습니다.",
     loading: "데이터를 불러오는 중...",
     schoolOfficial: "학교 공식 사이트",
+    languageLabel: "언어",
+    primaryNavigation: "주요 메뉴",
+    filtersAria: "검색 필터",
+    activityDaysAria: "활동일",
+    previousImage: "이전 사진",
+    nextImage: "다음 사진",
+    close: "닫기",
+    modalNote: "메모",
     navHome: "홈",
-    navDirectory: "Directory",
     navAbout: "이 사이트에 대해",
     navFaq: "FAQ",
     aboutTitle: "이 사이트에 대해",
@@ -202,8 +217,15 @@ const UI_TEXT = {
     noResults: "No circles match the selected conditions.",
     loading: "Loading data...",
     schoolOfficial: "University official page",
+    languageLabel: "Language",
+    primaryNavigation: "Primary navigation",
+    filtersAria: "Search filters",
+    activityDaysAria: "Activity days",
+    previousImage: "Previous photo",
+    nextImage: "Next photo",
+    close: "Close",
+    modalNote: "Note",
     navHome: "Home",
-    navDirectory: "Directory",
     navAbout: "About",
     navFaq: "FAQ",
     aboutTitle: "About",
@@ -265,8 +287,15 @@ const UI_TEXT = {
     noResults: "没有符合条件的社团。",
     loading: "正在加载数据...",
     schoolOfficial: "学校官方网站",
+    languageLabel: "语言",
+    primaryNavigation: "主导航",
+    filtersAria: "搜索筛选条件",
+    activityDaysAria: "活动日",
+    previousImage: "上一张照片",
+    nextImage: "下一张照片",
+    close: "关闭",
+    modalNote: "备注",
     navHome: "首页",
-    navDirectory: "Directory",
     navAbout: "关于本站",
     navFaq: "FAQ",
     aboutTitle: "关于本站",
@@ -327,6 +356,14 @@ UI_TEXT["zh-yue"] = {
   noResults: "沒有符合條件的社團。",
   loading: "正在載入資料...",
   schoolOfficial: "學校官方網站",
+  languageLabel: "語言",
+  primaryNavigation: "主導覽",
+  filtersAria: "搜尋篩選條件",
+  activityDaysAria: "活動日",
+  previousImage: "上一張相片",
+  nextImage: "下一張相片",
+  close: "關閉",
+  modalNote: "備註",
   navHome: "首頁",
   navAbout: "關於本站",
   aboutTitle: "關於本站",
@@ -597,10 +634,17 @@ function extractNumber(value) {
 function extractActivityDays(value) {
   const text = String(value ?? "");
   const days = new Set();
+  const orderedDays = ["月", "火", "水", "木", "金", "土", "日"];
   if (/不定期|随時|イベント|開催時|未定|応相談|曜日不定/.test(text)) days.add("不定期");
-  if (/毎日|全日/.test(text)) ["月", "火", "水", "木", "金", "土", "日"].forEach((day) => days.add(day));
+  if (/毎日|全日/.test(text)) orderedDays.forEach((day) => days.add(day));
   if (/平日/.test(text)) DAY_GROUPS.平日.forEach((day) => days.add(day));
   if (/週末|土日|休日/.test(text)) DAY_GROUPS.週末.forEach((day) => days.add(day));
+  for (const match of text.matchAll(/([月火水木金土日])(?:曜(?:日)?)?\s*[〜～~\-–—―]\s*([月火水木金土日])(?:曜(?:日)?)?/g)) {
+    const start = orderedDays.indexOf(match[1]);
+    const end = orderedDays.indexOf(match[2]);
+    if (start <= end) orderedDays.slice(start, end + 1).forEach((day) => days.add(day));
+    else [...orderedDays.slice(start), ...orderedDays.slice(0, end + 1)].forEach((day) => days.add(day));
+  }
   const patterns = {
     月: /月曜|月曜日|月[・,、\s／\/〜~\-]/,
     火: /火曜|火曜日|火[・,、\s／\/〜~\-]/,
@@ -614,6 +658,13 @@ function extractActivityDays(value) {
     if (pattern.test(text)) days.add(day);
   });
   return [...days];
+}
+
+function cleanDescription(value) {
+  let text = String(value ?? "").trim().replace(/(?:\s*[／/]\s*){2,}/g, "\n\n");
+  if (state.language === "en") text = text.replace(/([.!?])(?=[A-Z])/g, "$1 ");
+  if (state.language === "ko") text = text.replace(/([.!?])(?=[가-힣])/g, "$1 ");
+  return text;
 }
 
 function splitSchedule(value) {
@@ -684,7 +735,7 @@ function normalizeRow(row, translation = {}) {
     subcategory: translatedValue(translation, row, "サブカテゴリ") || "その他",
     categoryKey: row["メインカテゴリ"] || "その他",
     subcategoryKey: row["サブカテゴリ"] || "その他",
-    description: translatedValue(translation, row, "活動内容") || "情報なし",
+    description: cleanDescription(translatedValue(translation, row, "活動内容") || "情報なし"),
     schedule: displaySchedule || "情報なし",
     activityDateTime: scheduleParts.dateTime,
     location: scheduleParts.location,
@@ -718,7 +769,9 @@ function normalizeRow(row, translation = {}) {
 
 function buildRecordsForLanguage(language) {
   const translations = state.translations[language] || {};
-  return state.baseRows.map((row) => normalizeRow(row, translations[row.circle_id]));
+  return state.baseRows
+    .filter((row) => isPresent(row["名前"]))
+    .map((row) => normalizeRow(row, translations[row.circle_id]));
 }
 
 function renderSubcategories() {
@@ -795,6 +848,8 @@ function setupImageCarousel(container, images) {
   const prev = container.querySelector(".image-arrow-prev");
   const next = container.querySelector(".image-arrow-next");
   const hasMultipleImages = images.length > 1;
+  prev.setAttribute("aria-label", t("previousImage"));
+  next.setAttribute("aria-label", t("nextImage"));
 
   const update = () => {
     container.style.backgroundImage = `url("${images[index]}")`;
@@ -819,7 +874,9 @@ function renderCard(record) {
   const node = els.template.content.firstElementChild.cloneNode(true);
   setupImageCarousel(node.querySelector(".card-image"), record.images);
   node.querySelector(".card-kicker").textContent = `${record.mainCategory} / ${record.subcategory}`;
-  node.querySelector("h3").textContent = record.name;
+  const detailTrigger = node.querySelector(".card-detail-trigger");
+  detailTrigger.textContent = record.name;
+  detailTrigger.addEventListener("click", () => openModal(record));
   node.querySelector(".card-description").textContent = record.description;
   const meta = node.querySelector(".card-meta");
   appendMeta(meta, t("cardMembers"), formatMemberCount(record.membersRaw));
@@ -943,6 +1000,7 @@ function renderPaginationButtons(pages) {
 }
 
 function openModal(record) {
+  state.lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   setupImageCarousel(els.modalImage, record.images);
   els.modalCategory.textContent = `${record.mainCategory} / ${record.subcategory}`;
   els.modalTitle.textContent = record.name;
@@ -961,13 +1019,19 @@ function openModal(record) {
     [t("modalForeigner"), `${formatForeigner(record)} ${t("foreignerCriteria")}`],
     [t("modalWelcomeMark"), record.foreignerWelcomeMark ? t("yes") : t("none")],
     [t("modalSiteMemo"), localizeSimpleValue(record.siteMemo)],
-    ["note", localizeSimpleValue(record.note)],
+    [t("modalNote"), localizeSimpleValue(record.note)],
   ].forEach(([label, value]) => appendMeta(els.modalDetails, label, value));
   els.modal.hidden = false;
+  document.body.classList.add("modal-open");
+  els.modalClose.focus();
 }
 
 function closeModal() {
+  if (els.modal.hidden) return;
   els.modal.hidden = true;
+  document.body.classList.remove("modal-open");
+  if (state.lastFocusedElement?.isConnected) state.lastFocusedElement.focus();
+  state.lastFocusedElement = null;
 }
 
 function setText(selector, value) {
@@ -991,7 +1055,16 @@ function applyLanguage() {
   document.documentElement.lang = state.language === "ko" ? "ko" : state.language === "zh-yue" ? "zh-Hant-HK" : state.language === "zh" ? "zh-Hans" : state.language === "en" ? "en" : "ja";
   document.title = t("heroTitle");
   setText(".brand", t("brand"));
-  setTextAll(".nav-links > a", [t("navHome"), t("navDirectory"), t("navAbout"), t("navFaq")]);
+  setTextAll(".nav-links > a", [t("navHome"), t("navAbout"), t("navFaq")]);
+  document.querySelector(".nav-links")?.setAttribute("aria-label", t("primaryNavigation"));
+  setText(".language-control span", t("languageLabel"));
+  document.querySelector(".language-control")?.setAttribute("aria-label", t("languageLabel"));
+  els.language.setAttribute("aria-label", t("languageLabel"));
+  document.querySelector(".filters")?.setAttribute("aria-label", t("filtersAria"));
+  els.dayFilters.setAttribute("aria-label", t("activityDaysAria"));
+  els.modalClose.setAttribute("aria-label", t("close"));
+  document.querySelectorAll(".image-arrow-prev").forEach((button) => button.setAttribute("aria-label", t("previousImage")));
+  document.querySelectorAll(".image-arrow-next").forEach((button) => button.setAttribute("aria-label", t("nextImage")));
   setText(".hero h1", t("heroTitle"));
   setText(".hero p", t("heroCopy"));
   setText('label[for="searchInput"]', t("search"));

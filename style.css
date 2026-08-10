@@ -31,6 +31,10 @@ body {
   line-height: 1.65;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
 }
@@ -438,6 +442,20 @@ select {
   line-height: 1.35;
 }
 
+.card-detail-trigger {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
 .card-description {
   min-height: 4.7em;
   margin: 0 0 12px;
@@ -757,9 +775,13 @@ select {
 }
 
 @media (max-width: 620px) {
+  .topbar {
+    position: static;
+  }
+
   .page-top,
   section[id] {
-    scroll-margin-top: 168px;
+    scroll-margin-top: 12px;
   }
 
   .topbar-inner,
